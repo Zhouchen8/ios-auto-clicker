@@ -1,6 +1,6 @@
 # iOS 自动点击器（签名 IPA 分发版）
 
-根据 PRD v2.0 实现的 iOS 15+ 自动点击工具。基于原生「切换控制」执行系统级点击，免越狱、不注入，数据全本地存储。
+根据 PRD v2.0 实现的 iOS 16+ 自动点击工具。基于原生「切换控制」执行系统级点击，免越狱、不注入，数据全本地存储。
 
 版本：1.0.0（分发入口 `download.html`）
 
@@ -8,7 +8,7 @@
 
 ```
 ios-auto-clicker/
-├── project.yml                     # XcodeGen 工程定义（iOS 15+ / SwiftUI）
+├── project.yml                     # XcodeGen 工程定义（iOS 16+ / SwiftUI）
 ├── download.html                   # 一站式分发页（TestFlight/企业直装/.ipa 下载三模式自适应）
 ├── manifest.plist                  # 企业签名直装描述文件模板（itms-services 用）
 ├── AutoClicker/
@@ -64,7 +64,7 @@ open AutoClicker.xcodeproj   # 选择 Team 签名后 Archive 导出 .ipa
 - FR2 点位上限 20、参数校验（§7.1 步进对齐）、名称 ≤30 字符、保存/复制/删除
 - FR3 启动/暂停/停止、AppIntents 快捷指令（16+）、三击引导、前后台 30s 中断自动停止
 - FR4 完成/中断本地通知、控制台节拍计数、防呆校验
-- NFR iOS 15+、横竖屏相对坐标点位集、本地 JSON 存储（UserDefaults）、最小权限（无网络/无定位）
+- NFR iOS 16+、横竖屏相对坐标点位集、本地 JSON 存储（UserDefaults）、最小权限（无网络/无定位）
 
 ## 已知边界（PRD §2.2 / §9）
 

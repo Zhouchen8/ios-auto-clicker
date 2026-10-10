@@ -170,8 +170,9 @@ final class ScriptStore: ObservableObject {
     private func startBeat() {
         stopBeat()
         beatTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                guard let self, self.runState == .running else { return }
+                guard self.runState == .running else { return }
                 if self.isBackgrounded {
                     // 后台超过阈值则标记中断（FR3.6）
                     self.handleBackgroundExpiryIfNeeded()
@@ -190,18 +191,20 @@ final class ScriptStore: ObservableObject {
     // MARK: - 前后台监控（FR3.6：后台运行判定）
     private func observeLifecycle() {
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                self?.isBackgrounded = true
-                self?.backgroundEnterAt = Date()
+                self.isBackgrounded = true
+                self.backgroundEnterAt = Date()
             }
         }
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                self?.isBackgrounded = false
-                self?.backgroundEnterAt = nil
-                if self?.runState == .running {
+                self.isBackgrounded = false
+                self.backgroundEnterAt = nil
+                if self.runState == .running {
                     // 回前台：提示执行条件可能已丢失（FR3.6）
-                    self?.notifyInterrupted()
+                    self.notifyInterrupted()
                 }
             }
         }

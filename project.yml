@@ -2,7 +2,7 @@ name: AutoClicker
 options:
   bundleIdPrefix: com.example
   deploymentTarget:
-    iOS: "15.0"
+    iOS: "16.0"
   createIntermediateGroups: true
   xcodeVersion: "15.0"
   objectVersion: "56"

@@ -52,7 +52,7 @@ struct WizardView: View {
                             .font(.caption)
                     }
                     DisclosureGroup("支持哪些 iOS 版本？") {
-                        Text("iOS 15+ 可安装使用；原生辅助功能路径 iOS 15+，代理模式 iOS 17+（需签名 IPA）。App 内快捷指令能力 iOS 16+。")
+                        Text("iOS 16+ 可安装使用；原生辅助功能路径 iOS 16+，代理模式 iOS 17+（需签名 IPA）。App 内快捷指令能力 iOS 16+。")
                             .font(.caption)
                     }
                     DisclosureGroup("签名方式有哪些？") {
