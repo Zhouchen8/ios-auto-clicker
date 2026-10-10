@@ -1,0 +1,32 @@
+name: AutoClicker
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+  xcodeVersion: "15.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.7"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 1
+targets:
+  AutoClicker:
+    type: application
+    platform: iOS
+    sources:
+      - AutoClicker
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.autoclicker
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: 自动点击器
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: 用于导入目标界面截图以标定点击位置（仅使用用户选中的单张图片，通过系统照片选择器）
+        INFOPLIST_KEY_NSUserNotificationsUsageDescription: 用于在脚本执行完成或中断时发送本地通知提醒
+        CODE_SIGN_STYLE: Automatic
+    scheme:
+      testTargets: []

@@ -1,0 +1,55 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build unsigned IPA (archive)
+        run: |
+          set -euo pipefail
+          xcodebuild -project AutoClicker.xcodeproj \
+            -scheme AutoClicker \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            archive -archivePath build/AutoClicker.xcarchive
+
+          mkdir -p Payload
+          cp -r build/AutoClicker.xcarchive/Products/Applications/AutoClicker.app Payload/
+          zip -qr AutoClicker-unsigned.ipa Payload
+          rm -rf Payload
+
+      - name: Upload unsigned IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AutoClicker-unsigned
+          path: AutoClicker-unsigned.ipa
+
+      - name: Create GitHub Release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: AutoClicker-unsigned.ipa
+          name: "AutoClicker unsigned build"
+          tag_name: build-${{ github.run_number }}
+          body: |
+            未签名 IPA（适用于个人签名/开发者签名后分发）。
+            签名与安装步骤见仓库 README。

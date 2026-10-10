@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>iOS 自动点击器 · 安装</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --card: #141a22;
+    --card2: #1a2230;
+    --border: #253042;
+    --text: #e8edf4;
+    --muted: #93a1b5;
+    --accent: #2f7bff;
+    --accent2: #00c896;
+    --warn: #ffb02e;
+    --danger: #ff5b5b;
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: radial-gradient(1200px 600px at 20% -10%, #123, transparent), var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .card {
+    background: linear-gradient(180deg, var(--card2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 999px;
+    background: rgba(47,123,255,.15); color: var(--accent);
+    font-size: 12px; font-weight: 600; letter-spacing: .5px;
+    border: 1px solid rgba(47,123,255,.35);
+  }
+  h1 { font-size: 24px; margin: 10px 0 4px; }
+  .sub { color: var(--muted); font-size: 14px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .meta span {
+    font-size: 12px; color: var(--muted);
+    background: rgba(147,161,181,.08); padding: 4px 10px; border-radius: 8px;
+  }
+  .btn {
+    display: block; width: 100%; padding: 16px; border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 700; cursor: pointer; text-decoration: none;
+    text-align: center; transition: transform .1s, opacity .2s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), #1f5fd0); color: #fff; }
+  .btn-primary:disabled { background: #3a4657; color: var(--muted); cursor: not-allowed; }
+  .btn-testflight { background: linear-gradient(135deg, #1470cc, #0d4d8f); color: #fff; }
+  .btn-enterprise { background: linear-gradient(135deg, var(--accent2), #0b8f6c); color: #fff; }
+  .btn-ghost { background: var(--card2); color: var(--text); border: 1px solid var(--border); margin-top: 10px; font-size: 15px; }
+  .status { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 20px; }
+  .status.ok { color: var(--accent2); }
+  .status.warn { color: var(--warn); }
+  h2 { font-size: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    position: relative; padding: 10px 0 10px 42px; font-size: 14px; color: var(--text);
+  }
+  .steps li::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: 10px; width: 28px; height: 28px;
+    background: rgba(47,123,255,.15); color: var(--accent);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .note { font-size: 13px; color: var(--muted); }
+  .note strong { color: var(--warn); }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .tab {
+    flex: 1; padding: 10px; border-radius: 10px; text-align: center;
+    background: var(--card); border: 1px solid var(--border); font-size: 13px; color: var(--muted);
+    cursor: pointer; transition: all .15s;
+  }
+  .tab.active { background: rgba(47,123,255,.15); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  details { font-size: 14px; }
+  details summary { cursor: pointer; color: var(--accent); font-weight: 600; padding: 6px 0; }
+  details p { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  code { background: rgba(147,161,181,.12); padding: 2px 6px; border-radius: 6px; font-size: 13px; }
+  .footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 24px; }
+  .warnbox { background: rgba(255,176,46,.08); border: 1px solid rgba(255,176,46,.3); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--warn); margin-top: 12px; }
+  .greenbox { background: rgba(0,200,150,.08); border: 1px solid rgba(0,200,150,.3); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--accent2); margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card" style="text-align:center">
+    <span class="badge">iOS 15+</span>
+    <h1>iOS 自动点击器</h1>
+    <p class="sub">基于原生「切换控制」的合规自动点击工具 · 免越狱</p>
+    <div class="meta">
+      <span>版本 <b id="ver">1.0.0</b></span>
+      <span>分发模式 <b id="modeLabel">-</b></span>
+      <span>不进 App Store</span>
+    </div>
+  </div>
+
+  <!-- 一键安装区：TestFlight / 企业签名直装 / 下载三模式自适应 -->
+  <div class="card">
+    <h2>⬇ 安装</h2>
+    <a id="dlBtn" class="btn btn-primary" href="#" rel="noopener" style="pointer-events:none;opacity:.5">检测分发配置…</a>
+    <div id="status" class="status">正在检测分发模式…</div>
+
+    <div id="tfBox" class="greenbox" style="display:none">
+      ✅ TestFlight 官方渠道：点击上方按钮即跳转 TestFlight 安装，官方审核签名，无病毒/信任警告。
+    </div>
+
+    <div id="entBox" class="warnbox" style="display:none">
+      ⚠ 企业签名直装：点击按钮将触发系统安装。首次安装后请到
+      <b>设置 → 通用 → VPN 与设备管理</b> 信任该企业证书，之后即可正常使用（正规企业签名不会被当作病毒）。
+    </div>
+
+    <div id="missBox" class="warnbox" style="display:none">
+      当前未配置任何可安装通道（未填 TestFlight 链接、未填企业签名 manifest、且同目录无 <code>AutoClicker.ipa</code>）。
+      请修改页面底部 <code>CONFIG</code> 后刷新，或将签名好的 <code>AutoClicker.ipa</code> 放回本目录。
+    </div>
+
+    <button id="cfgBtn" class="btn btn-ghost" style="display:none">查看 / 修改分发配置</button>
+    <div id="cfgBox" class="card" style="display:none;margin-top:12px;background:var(--card);">
+      <p class="note" style="margin-bottom:10px">编辑 <code>CONFIG</code> 常量后刷新页面生效：</p>
+      <code style="display:block;white-space:pre-wrap" id="cfgPreview"></code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📲 安装教程</h2>
+    <div class="tabs">
+      <div class="tab active" data-tab="t1">TestFlight（推荐）</div>
+      <div class="tab" data-tab="t2">企业签名直装</div>
+      <div class="tab" data-tab="t3">.ipa 文件安装</div>
+    </div>
+
+    <div id="t1" class="panel active">
+      <ol class="steps">
+        <li>先安装 <strong>TestFlight</strong>（App Store 搜索「TestFlight」）。</li>
+        <li>用手机点击本页「安装」按钮，跳转 TestFlight 加入测试。</li>
+        <li>在 TestFlight 中点「安装」即可使用，系统自动签名，无信任提示。</li>
+      </ol>
+      <p class="note"><strong>注意：</strong>TestFlight 需开发者账号把设备添加为测试员；同一版本有效期为 90 天，到期更新链接即可。</p>
+    </div>
+
+    <div id="t2" class="panel">
+      <ol class="steps">
+        <li>点击本页「安装」按钮，Safari 将调用系统安装（需 https 域名 + 企业签名 ipa + manifest.plist）。</li>
+        <li>首次打开 App 前，到「设置 → 通用 → VPN 与设备管理」找到企业证书并点击「信任」。</li>
+        <li>信任一次后即可正常使用。</li>
+      </ol>
+      <p class="note"><strong>注意：</strong>企业证书分发受苹果管控（$299/年），仅限合规用途；正规企业签名不会被识别为病毒/木马。</p>
+    </div>
+
+    <div id="t3" class="panel">
+      <ol class="steps">
+        <li>点击下载 <code>.ipa</code> 文件（推荐 Safari 下载）。</li>
+        <li>连电脑用 <strong>爱思助手 / Apple Configurator / Xcode</strong> 安装到设备。</li>
+        <li>个人免费签名（7 天）或开发者签名（1 年）均可；首次安装免费签名包需信任开发者。</li>
+      </ol>
+      <p class="note"><strong>注意：</strong>iOS 不允许像 Android 那样点开 .ipa 文件直接安装，必须经签名 + 工具安装；这是系统机制。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔒 安全须知</h2>
+    <ul style="list-style:none;font-size:14px;color:var(--text)">
+      <li style="padding:4px 0">• 仅通过 iOS 原生「切换控制」执行，不做注入、不越狱。</li>
+      <li style="padding:4px 0">• 仅用于本人设备的合规用途，请勿用于违反平台规则的场景。</li>
+      <li style="padding:4px 0">• 数据全部本地存储，不上传任何脚本与截图。</li>
+      <li style="padding:4px 0">• 后台运行受限，退后台超过 30 秒自动停止并通知。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>🔧 分发配置说明（站长/开发者看这里）</summary>
+      <p><b>方案一 TestFlight（最推荐，无信任提示）：</b>在 App Store Connect 创建 TestFlight 测试，把公开链接填进 <code>testflightUrl</code>，一键直达。</p>
+      <p><b>方案二 企业签名直装：</b>将企业签名 ipa 与 <code>manifest.plist</code> 放到 https 服务器，填 <code>manifestUrl</code>（形如 https://你的域名/manifest.plist），按钮即触发 itms-services 安装。</p>
+      <p><b>方案三 普通下载：</b>把签名好的 <code>AutoClicker.ipa</code> 与页面放同目录（或填 <code>ipaUrl</code>），用户下载后按教程安装。</p>
+      <p>manifest.plist 模板已随页面提供，只需替换 ipa 地址与 bundle 信息。</p>
+    </details>
+  </div>
+
+  <p class="footer">iOS 自动点击器 · 一站式安装分发页</p>
+</div>
+
+<script>
+const CONFIG = {
+  testflightUrl: '',            // 填 TestFlight 公开链接（https://testflight.apple.com/join/xxxx）则优先显示"立即安装"
+  manifestUrl: '',              // 企业签名直装描述文件（https://你的域名/manifest.plist），触发系统安装
+  ipaFile: 'AutoClicker.ipa',  // 同目录安装包文件名（退化为下载模式）
+  ipaUrl: '',                   // 或直接填 https://.../AutoClicker.ipa
+  version: '1.0.0'
+};
+
+const $ = id => document.getElementById(id);
+const dlBtn = $('dlBtn'), status = $('status');
+$('ver').textContent = CONFIG.version;
+
+function setStatus(text, cls) {
+  status.textContent = text;
+  status.className = 'status' + (cls ? ' ' + cls : '');
+}
+
+function itmsURL(manifestUrl) {
+  return 'itms-services://?action=download-manifest&url=' + encodeURIComponent(manifestUrl);
+}
+
+function setup(mode, url, label, cls) {
+  dlBtn.href = url;
+  dlBtn.textContent = label;
+  dlBtn.className = 'btn ' + cls;
+  dlBtn.style.pointerEvents = 'auto';
+  dlBtn.style.opacity = '1';
+  $('modeLabel').textContent = mode;
+  $('cfgBtn').style.display = 'none';
+  $('cfgBox').style.display = 'none';
+}
+
+function probe() {
+  // 模式一：TestFlight（官方渠道，无信任提示）
+  if (CONFIG.testflightUrl) {
+    setup('TestFlight 直装', CONFIG.testflightUrl, '⬇ 立即安装（TestFlight）', 'btn-testflight');
+    $('tfBox').style.display = 'block';
+    $('entBox').style.display = 'none';
+    $('missBox').style.display = 'none';
+    setStatus('✓ TestFlight 官方渠道已就绪，点击即可跳转安装', 'ok');
+    return;
+  }
+
+  // 模式二：企业签名直装（itms-services）
+  if (CONFIG.manifestUrl) {
+    setup('企业签名直装', itmsURL(CONFIG.manifestUrl), '⬇ 立即安装（企业签名）', 'btn-enterprise');
+    $('tfBox').style.display = 'none';
+    $('entBox').style.display = 'block';
+    $('missBox').style.display = 'none';
+    setStatus('✓ 企业签名直装已配置，点击将触发系统安装', 'ok');
+    return;
+  }
+
+  // 模式三：同目录 .ipa 下载
+  const url = CONFIG.ipaUrl || (new URL(CONFIG.ipaFile, window.location.href)).href;
+  fetch(url, { method: 'HEAD', cache: 'no-store' })
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const len = r.headers.get('content-length');
+      setup('.ipa 下载', url, '⬇ 下载 AutoClicker.ipa', 'btn-primary');
+      $('tfBox').style.display = 'none';
+      $('entBox').style.display = 'none';
+      $('missBox').style.display = 'none';
+      setStatus('✓ 安装包已就绪，下载后按教程安装（.ipa 无法在 iOS 上点开直装）', 'ok');
+      if (len) { /* 可选展示体积 */ }
+    })
+    .catch(() => {
+      dlBtn.style.pointerEvents = 'none';
+      dlBtn.style.opacity = '.5';
+      dlBtn.textContent = '未配置安装通道';
+      $('modeLabel').textContent = '未就绪';
+      $('tfBox').style.display = 'none';
+      $('entBox').style.display = 'none';
+      $('missBox').style.display = 'block';
+      $('cfgBtn').style.display = 'block';
+      $('cfgPreview').textContent =
+        "const CONFIG = {\n" +
+        "  testflightUrl: '" + CONFIG.testflightUrl + "',   // 推荐：TestFlight 公开链接\n" +
+        "  manifestUrl: '" + CONFIG.manifestUrl + "',       // 企业签名直装 manifest.plist 地址\n" +
+        "  ipaFile: '" + CONFIG.ipaFile + "',\n" +
+        "  ipaUrl: '" + CONFIG.ipaUrl + "',\n" +
+        "  version: '" + CONFIG.version + "'\n};";
+      setStatus('未检测到任何可安装通道');
+    });
+}
+
+$('cfgBtn').onclick = () => { $('cfgBox').style.display = $('cfgBox').style.display === 'none' ? 'block' : 'none'; };
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    $('t' + t.dataset.tab.slice(1)).classList.add('active');
+  };
+});
+
+probe();
+</script>
+</body>
+</html>
