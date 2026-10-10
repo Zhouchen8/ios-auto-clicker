@@ -126,8 +126,8 @@ struct CaptureView: View {
                         .fill(.blue)
                         .frame(width: 24, height: 24)
                         .overlay(Circle().stroke(.white, lineWidth: 2))
-                        .position(x: geo.size.width * p.xPercent / 100,
-                                  y: geo.size.height * p.yPercent / 100)
+                        .position(x: geo.size.width * CGFloat(p.xPercent / 100),
+                                  y: geo.size.height * CGFloat(p.yPercent / 100))
                 }
             }
             .contentShape(Rectangle())
@@ -135,8 +135,8 @@ struct CaptureView: View {
                 guard overlayTaps.count < ParamValidator.pointLimit else { return }
                 let p = Point(
                     type: .tap,
-                    xPercent: ParamValidator.roundPercent(location.x / geo.size.width * 100),
-                    yPercent: ParamValidator.roundPercent(location.y / geo.size.height * 100)
+                    xPercent: ParamValidator.roundPercent(Double(location.x) / Double(geo.size.width) * 100),
+                    yPercent: ParamValidator.roundPercent(Double(location.y) / Double(geo.size.height) * 100)
                 )
                 overlayTaps.append(p)
             }
@@ -192,8 +192,8 @@ struct CaptureView: View {
                                     .fill(.orange)
                                     .frame(width: 20, height: 20)
                                     .overlay(Circle().stroke(.white, lineWidth: 2))
-                                    .position(x: geo.size.width * p.xPercent / 100,
-                                              y: geo.size.height * p.yPercent / 100)
+                                    .position(x: geo.size.width * CGFloat(p.xPercent / 100),
+                                              y: geo.size.height * CGFloat(p.yPercent / 100))
                             }
                         }
                         .contentShape(Rectangle())
@@ -201,8 +201,8 @@ struct CaptureView: View {
                             guard shotTaps.count < ParamValidator.pointLimit else { return }
                             let p = Point(
                                 type: .tap,
-                                xPercent: ParamValidator.roundPercent(location.x / geo.size.width * 100),
-                                yPercent: ParamValidator.roundPercent(location.y / geo.size.height * 100)
+                                xPercent: ParamValidator.roundPercent(Double(location.x) / Double(geo.size.width) * 100),
+                                yPercent: ParamValidator.roundPercent(Double(location.y) / Double(geo.size.height) * 100)
                             )
                             shotTaps.append(p)
                         }

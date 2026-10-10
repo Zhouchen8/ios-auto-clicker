@@ -5,7 +5,21 @@ import AppIntents
 @available(iOS 16.0, *)
 enum AppShortcutCenter {
     static func register() {
-        AppShortcuts.updateAppShortcutParameters()
+        // App Shortcuts 由 AppShortcutsProvider 在 App 启动时自动注册（FR3.1）
+    }
+}
+
+@available(iOS 16.0, *)
+struct AutoClickerShortcuts: AppShortcutsProvider {
+    static var appShortcuts: [AppShortcut] {
+        AppShortcut(
+            intent: StartScriptIntent(),
+            phrases: ["启动自动点击脚本"]
+        )
+        AppShortcut(
+            intent: StopScriptIntent(),
+            phrases: ["停止自动点击脚本"]
+        )
     }
 }
 
