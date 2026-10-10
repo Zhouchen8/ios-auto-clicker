@@ -177,7 +177,7 @@ struct CaptureView: View {
                     .background(Color.blue.opacity(0.15))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-            .onChange(of: selectedPickerItem) { _, newItem in
+            .onChange(of: selectedPickerItem) { newItem in
                 loadPickerItem(newItem)
             }
 

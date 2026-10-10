@@ -22,7 +22,7 @@ struct WizardView: View {
                                 Text(s.name).tag(Optional(s.id))
                             }
                         }
-                        .onChange(of: selectedScriptId) { _, newId in
+                        .onChange(of: selectedScriptId) { newId in
                             if let id = newId {
                                 progress = store.scripts.first { $0.id == id }.flatMap { s in
                                     GuideProgress(scriptId: s.id)
@@ -32,7 +32,7 @@ struct WizardView: View {
                     }
                 }
 
-                if let script = selectedScript, let p = progress {
+                if let p = progress {
                     Section("五步配置向导（\(stepsDone(p))/5）") {
                         stepRow(index: 0, text: "确认点位与参数", done: p.steps[0])
                         stepRow(index: 1, text: "打开「设置 → 辅助功能 → 切换控制」", done: p.steps[1])
@@ -70,7 +70,7 @@ struct WizardView: View {
                 if selectedScriptId == nil { selectedScriptId = store.scripts.first?.id }
                 refreshProgress()
             }
-            .onChange(of: store.scripts) { _, _ in refreshProgress() }
+            .onChange(of: store.scripts) { _ in refreshProgress() }
         }
     }
 
